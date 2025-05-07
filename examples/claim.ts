@@ -3,7 +3,7 @@ import { ClaimClient, Config } from "../src";
 import { getTestWallet, getWallet } from "./utils";
 
 async function main() {
-  const testWallet = getTestWallet();
+  const testWallet = getWallet();
   const config: Config = {
     rpcUrl: "https://api.devnet.solana.com",
     wallet: testWallet,

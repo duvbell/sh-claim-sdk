@@ -1,7 +1,7 @@
 import { Connection, Keypair } from "@solana/web3.js";
 import { AnchorProvider, Program, Wallet as NodeWallet} from "@coral-xyz/anchor";
-import idl from "../artifacts/claim.json";
-import { ClaimContract } from "../artifacts/claim";
+import idl from "./artifacts/claim.json";
+import { ClaimContract } from "./artifacts/claim";
 import { Orao } from "@orao-network/solana-vrf";
 import { Wallet } from "@coral-xyz/anchor/dist/cjs/provider";
 

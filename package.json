@@ -1,6 +1,6 @@
 {
   "name": "sh-claim-sdk",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "TypeScript SDK for Lottery Claim",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
