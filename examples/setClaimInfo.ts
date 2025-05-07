@@ -7,7 +7,7 @@ import { BN } from "@coral-xyz/anchor";
 
 async function main() {
   const keypair = getWallet();
-  const recipient = new PublicKey("7FnkLkamj6jnaZKaJGQs4fuhSuJdGM1HeiyHF5hH15ra");
+  const recipient = new PublicKey("BfiZDeHXzuz8pz5EGM6eUv1B1hLsGJQPRoxqYsBRKW3i");
   const config: Config = {
     rpcUrl: "https://api.devnet.solana.com",
     keypair: keypair,

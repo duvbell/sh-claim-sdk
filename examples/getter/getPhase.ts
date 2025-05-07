@@ -9,7 +9,8 @@ async function main() {
     rpcUrl: "https://api.devnet.solana.com",
   }
   const client = new ClaimClient(config);
-  const phase = await client.getPhase(wallet.publicKey, 1);
+  const phasePubkey = client.getPhasePDA(wallet.publicKey, 1);
+  const phase = await client.getPhase(phasePubkey);
   console.log(phase);
 }
 

@@ -40,8 +40,8 @@ export class ClaimClient {
     return phase;
   }
 
-  getVaultPDA(owner: PublicKey, phase_id: number) : PublicKey {
-    const phaseIdBn = new BN(phase_id);
+  getVaultPDA(owner: PublicKey, phaseId: number) : PublicKey {
+    const phaseIdBn = new BN(phaseId);
     let phase_id_bytes = phaseIdBn.toArrayLike(Buffer, "le", 8);
     const [vault] = PublicKey.findProgramAddressSync(
         [Buffer.from("vault"), owner.toBuffer(), phase_id_bytes],
@@ -58,17 +58,27 @@ export class ClaimClient {
     return claimInfo;
   }
 
-  async getPhase(owner: PublicKey, phaseId: number) : Promise<PhaseInfo> {
-    const phasePDA = this.getPhasePDA(owner, phaseId);
-    const phase = await this.fixture.program.account.phaseInfo.fetch(phasePDA);
+  async getPhase(phaseInfoPubkey: PublicKey) : Promise<PhaseInfo> {
+    const phase = await this.fixture.program.account.phaseInfo.fetch(phaseInfoPubkey);
     return {
-      phaseInfoPubkey: phasePDA,
+      phaseInfoPubkey: phaseInfoPubkey,
       owner: phase.owner,
       phase: phase.phase,
       totalAmount: phase.totalAmount,
       claimedAmount: phase.claimedAmount,
       vault: phase.vaultPubkey,
     };
+  }
+
+  async getVaultBalance(phaseInfoPubkey: PublicKey) : Promise<BN> {
+    const phase = await this.getPhase(phaseInfoPubkey);
+    const vaultPDA = this.getVaultPDA(phase.owner, phase.phase);
+
+    // Get account rent fee 
+    const rent = await this.fixture.provider.connection.getMinimumBalanceForRentExemption(0);
+    const rentBN = new BN(rent);
+    const vaultBalance = await this.fixture.provider.connection.getBalance(vaultPDA);
+    return new BN(vaultBalance).sub(rentBN);
   }
 
   async getClaimInfo(phaseInfoPubkey: PublicKey, recipient: PublicKey) : Promise<ClaimInfo> {

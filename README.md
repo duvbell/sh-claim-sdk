@@ -69,3 +69,11 @@ async function main() {
 
 main();
 ``` 
+
+## Get vault balance
+
+```bash
+ts-node examples/getter/getVaultBalance.ts
+```
+
+This function will return the balance of the vault, after deducting the rent fee.
