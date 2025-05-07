@@ -1,16 +1,17 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { ClaimClient, Config } from "../src";
-import { getTestWallet, getWallet } from "./utils";
+import { getWallet } from "./utils";
 import { BN } from "@coral-xyz/anchor";
+import { Wallet } from "@coral-xyz/anchor/dist/cjs/provider";
 
 
 
 async function main() {
-  const keypair = getWallet();
-  const recipient = new PublicKey("BfiZDeHXzuz8pz5EGM6eUv1B1hLsGJQPRoxqYsBRKW3i");
+  const wallet = getWallet();
+  const recipient = new PublicKey("GyPcdYe7JrM3W172JecLvS9xUEScjQWhARHyYqT9mj8J");
   const config: Config = {
     rpcUrl: "https://api.devnet.solana.com",
-    keypair: keypair,
+    wallet: wallet,
   }
   const client = new ClaimClient(config);
 

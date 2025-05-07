@@ -6,12 +6,12 @@ async function main() {
   const testWallet = getTestWallet();
   const config: Config = {
     rpcUrl: "https://api.devnet.solana.com",
-    keypair: testWallet,
+    wallet: testWallet,
   }
   const client = new ClaimClient(config);
 
   const phaseInfoPub = new PublicKey("RPbaxALp8J2Mrxw8k4qioBwtXiaG3sLpZjby15ynXC3");
-  const phase = await client.getPhase(phaseInfoPub, 1);
+  const phase = await client.getPhase(phaseInfoPub);
   console.log(phase);
 
   const txHash = await client.claim(phaseInfoPub);

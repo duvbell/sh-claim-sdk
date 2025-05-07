@@ -7,7 +7,7 @@ async function main() {
 
   const config: Config = {
     rpcUrl: "https://api.devnet.solana.com",
-    keypair: wallet,
+    wallet: wallet,
   }
   const client = new ClaimClient(config);
   const txHash = await client.initPhase(1);
