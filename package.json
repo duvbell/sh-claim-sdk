@@ -1,0 +1,36 @@
+{
+  "name": "sh-claim-sdk",
+  "version": "0.1.2",
+  "description": "TypeScript SDK for Lottery Claim",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "sdk",
+    "typescript",
+    "vrf"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@orao-network/solana-vrf": "^0.6.1",
+    "@solana/web3.js": "^1.98.2"
+  }
+}

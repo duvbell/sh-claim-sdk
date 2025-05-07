@@ -1,0 +1,329 @@
+{
+  "address": "4VpxCJkYsBMxp4kC5ZEV9amoZajjBftYqAZrUFNQ1snn",
+  "metadata": {
+    "name": "claim_contract",
+    "version": "0.6.1",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "claim",
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "phase_info",
+          "writable": true
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "claim_info",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_phase",
+      "discriminator": [
+        81,
+        205,
+        114,
+        86,
+        147,
+        115,
+        163,
+        110
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "phase",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  104,
+                  97,
+                  115,
+                  101,
+                  95,
+                  105,
+                  110,
+                  102,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "phase_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "phase_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "phase_id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_claim_info",
+      "discriminator": [
+        160,
+        133,
+        55,
+        107,
+        88,
+        223,
+        3,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "phase_info"
+          ]
+        },
+        {
+          "name": "phase_info",
+          "writable": true
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "claim_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  108,
+                  97,
+                  105,
+                  109,
+                  95,
+                  105,
+                  110,
+                  102,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "phase_info"
+              },
+              {
+                "kind": "account",
+                "path": "recipient"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ClaimInfo",
+      "discriminator": [
+        129,
+        190,
+        22,
+        157,
+        235,
+        64,
+        38,
+        111
+      ]
+    },
+    {
+      "name": "PhaseInfo",
+      "discriminator": [
+        175,
+        248,
+        113,
+        218,
+        123,
+        235,
+        237,
+        60
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "RandomnessRequestSerializationError",
+      "msg": "Unable to serialize a randomness request"
+    },
+    {
+      "code": 6001,
+      "name": "YouMustPutInSomeForce",
+      "msg": "You must put in some force"
+    },
+    {
+      "code": 6002,
+      "name": "NotOwner",
+      "msg": "Not owner"
+    },
+    {
+      "code": 6003,
+      "name": "AlreadyClaimed",
+      "msg": "Already claimed"
+    },
+    {
+      "code": 6004,
+      "name": "NotClaimer",
+      "msg": "Not claimer"
+    },
+    {
+      "code": 6005,
+      "name": "NotVault",
+      "msg": "Not vault"
+    },
+    {
+      "code": 6006,
+      "name": "NotPhaseInfo",
+      "msg": "Not phase info"
+    }
+  ],
+  "types": [
+    {
+      "name": "ClaimInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "phase_info_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "is_claimed",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PhaseInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "phase",
+            "type": "u64"
+          },
+          {
+            "name": "total_amount",
+            "type": "u64"
+          },
+          {
+            "name": "claimed_amount",
+            "type": "u64"
+          },
+          {
+            "name": "vault_pubkey",
+            "type": "pubkey"
+          }
+        ]
+      }
+    }
+  ]
+}
