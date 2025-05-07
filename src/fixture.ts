@@ -1,9 +1,10 @@
 import { Connection, Keypair } from "@solana/web3.js";
-import { AnchorProvider, Program, Wallet as NodeWallet} from "@coral-xyz/anchor";
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import idl from "./artifacts/claim.json";
 import { ClaimContract } from "./artifacts/claim";
 import { Orao } from "@orao-network/solana-vrf";
-import { Wallet } from "@coral-xyz/anchor/dist/cjs/provider";
+import { Wallet } from "@coral-xyz/anchor";
 
 export type Config = {
   rpcUrl: string;
@@ -19,13 +20,11 @@ export type Fixture = {
 export const getFixture = (config: Config): Fixture => {
   const connection = new Connection(config.rpcUrl);
 
-  // TODO: mock wallet, since we don't need to sign transactions
-  if (!config.wallet) {
-    config.wallet = new NodeWallet(Keypair.generate());
-  }
-  const provider = new AnchorProvider(connection, config.wallet);
+  const wallet = config.wallet ?? new NodeWallet(Keypair.generate());
+
+  const provider = new AnchorProvider(connection, wallet);
   const program = new Program(idl, provider) as Program<ClaimContract>;
   const vrf = new Orao(provider);
+
   return { program, vrf, provider };
 }
-
